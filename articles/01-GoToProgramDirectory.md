@@ -10,7 +10,7 @@ function cddir-of() {
 	
 	[ ! -f "${filefullpath}" ] && { echo "File not found!"; return; }
 	
-    cd $(dirname $(which ${filefullpath})) 
+    cd $(dirname $(which "${filefullpath}")) 
 }
 ```
 
