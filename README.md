@@ -4,4 +4,5 @@ This is just a collection of thoughts, scripts and things that I feel like docum
 
 ## Contents
 
-- [How to terminate a Java Application running on a specific port in windows](articles/TerminateJavaApplicationOnWindows.md)  
+- [How to terminate an Application running on a specific port in windows](articles/00-TerminateJavaApplicationOnWindows.md)  
+- [How to cd into the directory of a given program without knowing where the program directory is](articles/01-GoToProgramDirectory.md)  
