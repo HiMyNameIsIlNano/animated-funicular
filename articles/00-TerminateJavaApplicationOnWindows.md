@@ -2,6 +2,12 @@ Sometimes it happens that applications hang and their respective used port remai
 
 ```bash
 function kill-proc-on-port() {
+	if [ "$#" -ne 1 ]; then
+		echo "At least one parameter must be provided to the function."
+        	echo "${FUNCNAME[0]} HH:MM [MM]"
+		return
+	fi
+	
 	local port="$@"
 	
 	PIDS=$(netstat -ano | findstr :$port | awk '{print $5}')
