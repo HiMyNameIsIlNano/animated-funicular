@@ -13,7 +13,7 @@ function kill-proc-on-port() {
 	PIDS=$(netstat -ano | findstr :$port | awk '{print $5}')
 	for pid in $PIDS
 	do
-		taskkill /PID $pid /F
+		taskkill //PID $pid //F
 	done
 }
 ```
