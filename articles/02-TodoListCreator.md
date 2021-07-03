@@ -1,4 +1,4 @@
-I started organizing my work tasks using simple simple todo lists and I came up with the following two bash function to achieve that. The script requires an environment variable called `${TODOS_OUT_FOLDER}` to be present.
+I started organizing my work tasks using simple todo lists and I came up with the following two bash functions to achieve that. The script requires an environment variable called `${TODOS_OUT_FOLDER}` to be present.
 
 ```bash
 todo-create() {
@@ -48,5 +48,5 @@ todo-edit() {
 }
 ```
 
-usage `todo-create [filename] [outdir]`. If the filename and the outdir are not provided a file named YYYY-MM-DD.todo will be created under `${TODOS_OUT_FOLDER}/${YYYYMM}`
-usage `todo-edit [filename]`. If the filename is provided the file provided will be edited. Otherwise, a default named file will be created with the logic defined above
+usage `todo-create [filename] [outdir]`. If the filename and the outdir are not provided a file named `YYYY-MM-DD.todo` will be created under `${TODOS_OUT_FOLDER}/${YYYYMM}`
+usage `todo-edit [filename]`. If the filename is provided the file will be edited. If the file by that name does not exists, it will be created. Without any parameter the function will create a default named file with the logic described in the `todo-create` function.
