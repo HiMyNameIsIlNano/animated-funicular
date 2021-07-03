@@ -48,5 +48,5 @@ todo-edit() {
 }
 ```
 
-usage `todo-create [filename] [outdir]`. If the filename and the outdir are not provided a file named `YYYY-MM-DD.todo` will be created under `${TODOS_OUT_FOLDER}/${YYYYMM}`
-usage `todo-edit [filename]`. If the filename is provided the file will be edited. If the file by that name does not exists, it will be created. Without any parameter the function will create a default named file with the logic described in the `todo-create` function.
+- usage `todo-create [filename] [outdir]`. If the filename and the outdir are not provided a file named `YYYY-MM-DD.todo` will be created under `${TODOS_OUT_FOLDER}/${YYYYMM}`
+- usage `todo-edit [filename]`. If the filename is provided the file will be edited. If the file by that name does not exists, it will be created. Without any parameter the function will create a default named file with the logic described in the `todo-create` function.
