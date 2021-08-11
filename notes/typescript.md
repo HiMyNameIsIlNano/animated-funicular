@@ -38,7 +38,9 @@ Used for the cases where one has a value whose type one does not knowahead of ti
 ### Boolean
 
 ```typescript
-let b: true
+let b = true
+let b: true = true // (2) type literal definition
+let b: false = true // (3) This would raise an error
 ```
 
-in this way we have defined the variable b to a specific type literal. A type literal is a type that represents a single value and nothing else.
+in cases (2) and (3) we have defined the variable b to a specific type literal. A type literal is a type that represents a single value and nothing else.
