@@ -71,3 +71,36 @@ let a = Symbol('a')
 let b: symbol = Symbol('b')
 const e = Symbol('e') // This is inferred to be a unique symbol 
 ```
+
+### Object
+
+The object type is used to describe objects. An object is a bit narrower than `any` but it does not tell one much about the value it describes rather than the value is a javascript object.
+
+```typescript
+let h0: object = { b: 'value' }
+console.log(h0.b) // (1) The property b does not exist on type object
+
+let h: { b: string, c?: number, d: boolean } = {b: 'value', d: true}
+console.log(h.b) // (2) it prints 'value'
+
+let j: { [b: number]: string } = {10: 'ten'} // Object with index signature
+let danger: Object = {} // The compiler complains about this one and IT MUST be AVOIDED
+```
+
+In general one should avoid the following types of syntax:
+
+```typescript
+let notgood = {}
+let notgood = {x: 1}
+let notgood: Object
+let notgood: Object = {}
+```
+
+in favor of the following syntax:
+
+```typescript
+let ok: {x: number} = {x: 10} // When you know the shape of the object 
+let ok: object // If you do not care which fields the object has
+```
+
+For this reason case (1) would raise an error as the type of `h0` is `object` and `object` has no property by the name `b`. If we would have left
