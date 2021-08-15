@@ -7,3 +7,4 @@ This is just a collection of thoughts, scripts and things that I feel like docum
 - [How to terminate an Application running on a specific port in windows](articles/00-TerminateJavaApplicationOnWindows.md)  
 - [How to cd into the directory of a given program without knowing where the program directory is](articles/01-GoToProgramDirectory.md)
 - [How to have a simple but effective todo list creator and editor](articles/02-TodoListCreator.md)  
+- [How to get the address of a REST Controller Resource in Wildfly](articles/03-FindRestControllerApiAddressInWildfly.md)  

@@ -1,0 +1,4 @@
+Sometimes it happens that I need to get the Address of a REST Endpoint of an Application Deployed in Wildfly. In the past I always had to google it and check on the Widlfly documentation.  
+As it happens, most of the times one discovers the shortest path on his way back home and this is exactly the case.  In order to get the URL of an endpoint one can go to the HAL Management Console (e.g. `http(s)://my-wonderful-application/management/`). In case of the local development environment it should be `http://localhost:9990/management`.
+Clicking on `Runtime`, then `JAX-RS` and finally on the Rest Controller class one should get to the needed piece of information. 
+The Resource Path will be shown with a brief description of the message signature.
