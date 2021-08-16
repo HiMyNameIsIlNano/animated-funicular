@@ -104,3 +104,87 @@ let ok: object // If you do not care which fields the object has
 ```
 
 For this reason case (1) would raise an error as the type of `h0` is `object` and `object` has no property by the name `b`. If we would have left
+
+#### Type Aliases
+
+Types can be aliased in the following way:
+
+```typescript
+type Age = number
+
+type Person = {
+    name: string,
+    age: number
+}
+```
+
+different types of objects can be merged together:
+
+```typescript
+type Cat = {name: string, purrs: boolean}
+type Dog = {name: string, barks: boolean, wags: boolean}
+type CatOrDogOrBoth = Cat | Dog
+type CatAndDog = Cat & Dog
+
+// I can either define the cat properties
+let cat: CatOrDogOrBoth = {
+    name: 'sgnapsi',
+    purrs: true
+}
+
+// I can either define the Dog properties
+let dog: CatOrDogOrBoth = {
+    name: 'doggy',
+    purrs: false,
+    barks: true
+}
+
+// This must define all the properties in Cat and Dog
+let monster: CatAndDog = {
+    barks: true,
+    purrs: false,
+    name: 'monster',
+    wags: true
+}
+```
+
+A nice usage of unions can be for instance when a function returns either a value or null, like for example:
+
+```typescript
+type MyType = string | null
+
+function trueOrNull(isTrue: boolean): MyType {
+    if(isTrue) {
+        return 'true'
+    }
+    return null
+}
+```
+
+### Arrays
+
+```typescript
+function addItemsToArray() {
+    const values = [];
+    values.push('text')
+    values.push(true)
+    return values
+}
+
+let array = addItemsToArray();
+array.push(10); // A number cannot be assigned to a type 'string | boolean'. When the type is outside the scope it was defined into, typescript makes it final
+```
+
+### Tuples
+
+Tuples are a natural extension of arrays and can contain several different object types:
+
+```typescript
+const singleton: [number] = [1]
+const pair: [number, number] = [1, 2]
+const triple: [number, number, number] = [1, 2, 3]
+const tuple: [number, ...number[]] = [1, 2, 3, 4, 5] // n-elements tuple with one mandatory element
+
+type Color = string
+const colorPalette: [boolean, string, ...Color[]] = [true, 'Custom Color', '#FFFFFF']
+```
