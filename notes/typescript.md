@@ -18,7 +18,7 @@ To know which options are available for the compiler one can
 
 ```shell
 cd /path/to/typescript/project
-./node_modules/bin/tsc --help
+./node_modules/.bin/tsc --help
 ```
 
 If one wants to initialize the linter on a specific project: 
@@ -26,6 +26,22 @@ If one wants to initialize the linter on a specific project:
 ```shell
 cd /path/to/typescript/project
 ./node_modules/bin/tslint --init
+```
+
+### How to compile and run a ts program
+
+- Compile:
+
+```shell
+cd /path/to/typescript/project
+./node_modules/.bin/tsc
+```
+
+- Run the transpiled code:
+
+```shell
+cd ../dist
+node tsFileName.js
 ```
 
 ## Type System
@@ -175,6 +191,16 @@ let array = addItemsToArray();
 array.push(10); // A number cannot be assigned to a type 'string | boolean'. When the type is outside the scope it was defined into, typescript makes it final
 ```
 
+##### Readonly Arrays:
+
+```typescript
+const notmodifyable: readonly number[] = [1, 2, 3];
+console.log(notmodifyable)
+
+// notmodifyable.push(6); // the property push does not exist on type readonly
+console.log(notmodifyable.concat(6)) // A new instance is created here
+```
+
 ### Tuples
 
 Tuples are a natural extension of arrays and can contain several different object types:
@@ -187,4 +213,23 @@ const tuple: [number, ...number[]] = [1, 2, 3, 4, 5] // n-elements tuple with on
 
 type Color = string
 const colorPalette: [boolean, string, ...Color[]] = [true, 'Custom Color', '#FFFFFF']
+```
+
+### Unedfined, Null, Void and Never 
+
+- `undefined` means that something has not been defined yet
+- `null` means the absence of a value
+- `void` is the type used by functions that do not retun any value
+- `never` is the type used by functions that never returns at all (e.g. because of an error or because it is a function that runs forever)
+
+```typescript
+function doNotReturnAnything() {
+    const localVar: number = 4
+}
+
+function neverEnding(): never {
+    while (true) {
+        doNotReturnAnything()
+    }
+}
 ```
