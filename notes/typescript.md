@@ -233,3 +233,65 @@ function neverEnding(): never {
     }
 }
 ```
+
+### Enums
+
+Enums can be defined to be mapping string to number or string to string.
+
+```typescript
+// Enum names are singular and Uppercase
+// Here TSC infers the key indexes to be 0, 1, 2
+enum ColorEnum {
+    Red,
+    Green,
+    Blue
+}
+
+// I can also tell the TSC what number values I want my enum to have
+enum LanguageEnum {
+    Italian = 1,
+    English = 5,
+    German = 7
+}
+
+// Enums can also be merged together
+enum BeverageEnum {
+    Coffee = 0,
+    Water = 1,
+}
+enum BeverageEnum {
+    Tea = 2,
+}
+// In this case it is possible to access the enum via index, but the index is out of bound
+console.log(BeverageEnum[6])
+
+const enum ColorHexEnum {
+    Red = '#fd024c',
+    Green = '#02fdbf',
+    Blue = '#022ffd'
+}
+console.log(ColorHexEnum[6]) // A const enum can only be accessed using the string literal
+console.log(ColorHexEnum.Red)
+
+const enum Cookable {
+    Pasta,
+    Pizza,
+    Vegetables
+}
+function cookIt(cookable: Cookable) {
+    console.log('Cooking: ' + cookable)
+}
+cookIt(Cookable.Pasta)
+cookIt(25) // This is possible because we have defined the Cookable enum type to map numbers
+
+const enum SaferCookable {
+    Pasta = 'Pasta',
+    Pizza = 'Pizza',
+    Vegetables = 'Vegetables'
+}
+function cookItSafe(cookable: SaferCookable) {
+    console.log('Cooking: ' + cookable)
+}
+cookItSafe(SaferCookable.Pasta)
+cookItSafe(25) // It is not possible to call the function with a number as the enum maps string to string
+```
