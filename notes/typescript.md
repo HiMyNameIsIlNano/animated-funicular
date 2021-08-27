@@ -352,3 +352,33 @@ function varArgsParameters (...numbers: number[]): number {
 console.log('varArgsParameters: ' + varArgsParameters(1, 2, 3))
 console.log('varArgsParameters: ' + varArgsParameters(10, 20, 30, 40))
 ```
+
+### Typing this in classes and functions
+
+Typing `this` in functions or in general outside a class can be puzzling due to the way javascript works. In javascript `this` will take the value of the thing on the left of the dot when invoking a method, like for example:
+
+```typescript
+let x = {
+    a() {
+        return this // this is not allowed outside of class bodies (see: tslint.json `no-invalid-this`)
+    }
+}
+const thees = x.a(); // thees is of type `a()`
+console.log(thees) // `this` is in this case the function a() of x
+
+const that = x.a
+console.log(that()) // that is of type `() => a()` therefore the value returned by the function is undefined
+```
+
+the usage of the keyword `this` can be disabled with the configuration `no-invalid-this` in `tslint.json`.
+
+Another example of why using `this` might be dangerous is described in the example below:
+
+```typescript
+function fancyDate() {
+    return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`
+}
+
+console.log(`Fancy Date: ${fancyDate.call(new Date())}`)
+console.log(fancyDate()) // in this case this is null because nothing is passed to the function
+```
