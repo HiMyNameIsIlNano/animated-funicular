@@ -78,9 +78,43 @@ Another example of why using `this` might be dangerous is described in the examp
 
 ```typescript
 function fancyDate() {
-    return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`
+    return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}` // In this case the compiler complains that 'this' is of type any
 }
 
 console.log(`Fancy Date: ${fancyDate.call(new Date())}`)
 console.log(fancyDate()) // in this case this is null because nothing is passed to the function
 ```
+
+The example of `fancyDate()` above make the compiler complain that `this` is bound to any. This is due to the fact that the we enabled the strict clause in the `tslint.json`. If the strict mode is not active one needs to activate the `noImplicitThis`. This is a very useful feature from the typescript system. In order to fix the issue with the strict mode one must:
+
+```typescript
+function fancyDateWithExplicitThis(this: Date) {
+    return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`
+}
+console.log(`Fancy Date with call: ${fancyDateWithExplicitThis.call(new Date())}`)
+console.log(`Fancy Date with apply: ${fancyDateWithExplicitThis.apply(new Date())}`)
+```
+
+## Generator Functions
+
+Typescript supports javascript generator functions as well. Generators generate values upon necessity and return an IterableIterator<...>. Here is an example of a generator function:
+
+```typescript
+function* fibonacci() {
+    let a = 0
+    let b = 1
+    // const c = 1
+    while (1) {
+        yield a; // This allows the generator to generate a new value. Yield b would have worked anyway. Yield c would have never worked
+        [a, b] = [b, a + b] // Assign b to a, and assign b to a + b
+    }
+}
+const generator = fibonacci();
+console.log(`Next fibonacci value: ${generator.next().value}`) // 0
+console.log(`Next fibonacci value: ${generator.next().value}`) // 1
+console.log(`Next fibonacci value: ${generator.next().value}`) // 1
+console.log(`Next fibonacci value: ${generator.next().value}`) // 2
+console.log(`Next fibonacci value: ${generator.next().value}`) // 3
+```
+
+The key point here is that generators do their job when asked so, their execution is somehow stopped and resumed upon necessity (e.g. in our example above it is where the `yield` function is invoked).
