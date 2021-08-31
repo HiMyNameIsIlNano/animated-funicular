@@ -118,3 +118,34 @@ console.log(`Next fibonacci value: ${generator.next().value}`) // 3
 ```
 
 The key point here is that generators do their job when asked so, their execution is somehow stopped and resumed upon necessity (e.g. in our example above it is where the `yield` function is invoked).
+
+## Iterators
+
+### Iterable
+Any object that contains a property called `Symbol.iterator`, whose valule is a function that returns an iterator.
+
+### Iterator
+Any object that defines a method called `next()`, which returns an object with the properties `values` and `done`.
+
+An iterator can be defined in the following way:
+
+```typescript
+let numbers = {
+    *[Symbol.iterator]() {
+        for (let n = 0; n <  5; n++) {
+            yield n;
+        }
+    }
+}
+// Using an iterator
+for (const n of numbers) {
+    console.log(`current number: ${n}`)
+}
+
+const allNumbers = [...numbers];
+console.log(`allNumbers: ${allNumbers}`)
+
+const [zero, one, ...rest] = numbers
+console.log(`zero: ${zero}, one: ${one}, rest: ${rest}`)
+```
+
