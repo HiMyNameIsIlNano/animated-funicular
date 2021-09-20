@@ -149,3 +149,16 @@ const [zero, one, ...rest] = numbers
 console.log(`zero: ${zero}, one: ${one}, rest: ${rest}`)
 ```
 
+### Type Level Definitions
+
+In typescript a function can be defined starting from its contract (i.e. its signature) and subsequently implemented. This means that a function signautre or a function in general can be defined at Type Level first, that is, by defining the type of the input parameters and output parameters.  
+
+```typescript
+// This is a function defined as type and then implemented following the function signature
+type Sum = (n: number, addend?: number) => number
+let increment: Sum = (n, addend = 1) => {
+    return n + addend;
+}
+console.log(`Increment 5 by 1: ${increment(5)}`)
+console.log(`Increment 5 by 2: ${increment(5, 2)}`)
+```
