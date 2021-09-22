@@ -162,3 +162,48 @@ let increment: Sum = (n, addend = 1) => {
 console.log(`Increment 5 by 1: ${increment(5)}`)
 console.log(`Increment 5 by 2: ${increment(5, 2)}`)
 ```
+
+### Overloaded Functions' Signature
+
+#### Overloading Function Expressions
+
+Let us assume that we want to provide an API for booking a flight in two different ways, that is, a two-way flight and a one-way flight. We can define the API thw following way:
+
+```typescript
+type Reserve = {
+    (from: Date, to: Date, destination: string): number
+    (from: Date, destination: string): number
+}
+```
+
+If we try to implement the first method of this API (the two-way flight booking), the Typescript compiler will not be able to infer the signature for us
+
+```typescript
+// This function is not assignable to type Reserve because of overloading
+let twoWayReservation: Reserve = (from, to, destination) => {
+    return 100
+};
+```
+
+the definition above will result in a `type (...) => number is not assignable to type Reserve` and this is because the implementation of this function is wrong and needs to be 'merged' by hand by the implementor: 
+
+```typescript
+// In order for the problem to be fixed we have to compose the signature by hand
+let twoWayReservationOk: Reserve = (from: Date, to: Date | string, destination?: string) => {
+    return 100
+};
+```
+this is due to the fact that from an implementation point of view there need to be one single function that can be implemented
+
+#### Overloading Function Declarations
+
+A second way to define and overload functions is the so called function declarations:
+
+```typescript
+function createDummy(dummy: 'a'): number
+function createDummy(dummy: 'b'): number
+function createDummy(dummy: 'c'): number
+function createDummy(dummy: string): number {
+    return 10;
+}
+```
