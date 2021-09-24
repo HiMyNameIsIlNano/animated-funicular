@@ -207,3 +207,50 @@ function createDummy(dummy: string): number {
     return 10;
 }
 ```
+
+#### Generic Functions
+
+A way to avoid overriding of functions is through the usage of generic. The following way for defining a generic function:
+
+```typescript
+type GenericFilter = {
+    <T>(arr: T[], f: (item: T) => boolean): T[]
+}
+let genericFilter: GenericFilter = (array, f) => {
+    const filtered = []
+    for (const item of array) {
+        if (f(item)) {
+            filtered.push(item)
+        }
+    }
+    return filtered
+}
+let genericFilterResult = genericFilter(names, _ => _.firstName.startsWith('A'))
+console.log(`Generic Filter Result: ${genericFilterResult}`)
+
+let genericFilterResult2 = genericFilter([1, 2, 3, 4], _ => _ > 2)
+console.log(`Generic Filter Result: ${genericFilterResult2}`)
+```
+
+can be used to allow passing of several different types of objects to the same function without having to rewrite a different signature everytime and avoiding the merge of the function's signatures by hand.
+
+In the previous function definition, the generic type was attached to the call signature (e.g. `<T>(arr: T[], f: (item: T) => boolean): T[]`), but it could also be attached to the type definition like this:
+
+```typescript
+type AnotherGenericFilter<T> = {
+    (arr: T[], f: (item: T) => boolean): T[]
+}
+let stringGenericFilter: AnotherGenericFilter<string> = (array, f) => {
+    const filtered = []
+    for (const item of array) {
+        if (f(item)) {
+            filtered.push(item.toLowerCase())
+        }
+    }
+    return filtered
+}
+let genericFilterResult3 = stringGenericFilter(['A', 'B', 'C', 'D'], _ => _ === 'A')
+console.log(`String Filter Result: ${genericFilterResult3}`)
+```
+
+The difference between the two forms of defitions lies on the fact that in the first case (i.e. function signature) the type is bound at runtime. With the second definition (i.e. type definition) the type is checked when the function is defined and thus, it needs to be specified when defining the function (e.g. `let stringGenericFilter...`).
