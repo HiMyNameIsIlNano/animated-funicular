@@ -5,7 +5,7 @@ A good rule of thumb is to let the TSC infer the type of your variable and avoid
 This is the most generic type of data.
 
 ### Unknown
-Used for the cases where one has a value whose type one does not knowahead of time, one should use unknown instead of any.
+Used for the cases where one has a value whose type one does not know ahead of time, one should use unknown instead of any.
 
 ### Boolean
 
@@ -57,7 +57,7 @@ let j: { [b: number]: string } = {10: 'ten'} // Object with index signature
 let danger: Object = {} // The compiler complains about this one and IT MUST be AVOIDED
 ```
 
-In general one should avoid the following types of syntax:
+Case (1) would raise an error as the type of `h0` is `object` and `object` has no property by the name `b`. In general one should avoid the following types of syntax:
 
 ```typescript
 let notgood = {}
@@ -73,18 +73,16 @@ let ok: {x: number} = {x: 10} // When you know the shape of the object
 let ok: object // If you do not care which fields the object has
 ```
 
-For this reason case (1) would raise an error as the type of `h0` is `object` and `object` has no property by the name `b`. If we would have left
-
 #### Type Aliases
 
 Types can be aliased in the following way:
 
 ```typescript
-type Age = number
+type age = number
 
 type Person = {
     name: string,
-    age: number
+    age: age
 }
 ```
 

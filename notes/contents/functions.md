@@ -254,3 +254,27 @@ console.log(`String Filter Result: ${genericFilterResult3}`)
 ```
 
 The difference between the two forms of defitions lies on the fact that in the first case (i.e. function signature) the type is bound at runtime. With the second definition (i.e. type definition) the type is checked when the function is defined and thus, it needs to be specified when defining the function (e.g. `let stringGenericFilter...`).
+
+There are several ways to define a generic function:
+
+```typescript
+// The type is bound at function's call time
+type addItem1a = {
+    <T>(array: T[], item: T): T[]
+}
+// The type is bound at function's call time
+type addItem1b = <T>(array: T[], item: T) => T[]
+
+type addItem2a<T> = {
+    (array: T[], item: T): T[]
+}
+type addItem2b<T> = (array: T[], item: T) => T[]
+
+// The type is bound at function's call time
+function addItem3a<T>(array: T[], item: T): T[] {
+    // Do something
+    return []
+}
+```
+
+with each function definition type a different type of argument binding takes place. It looks as if, for every 'a' function type the generic is bound at function call time. On the other hand, function types 'b' are bound to compile/definition time.
