@@ -281,7 +281,7 @@ with each function definition type a different type of argument binding takes pl
 
 #### Generic type aliases
 
-The same way functions can be defined generic, types can be generic too. 
+The same way functions can be defined generic, types can be generic too. In the following example we have defined a generic event that works with whatever type of event has been passed in to the generic `MyEvent<T>` type definition: 
 
 ```typescript
 type PayloadVO = {
@@ -317,4 +317,52 @@ printEvent({
     description: 'Another random event',
     payload: 'UUID12345'
 })
+```
+
+### Bounded Polymorphism
+
+It is possible to adopt the same approach as from Java to typescript.Functions can be written in a way the can accept generic types bounded to a specific class type. In the following example, for instance, the inspect function expects an object that is of (super)type `payload`. In this way, the `inspect(...)` function can work with both the `stringPayload` type and the `numberPayload` type. 
+
+```typescript
+type payload<T> = {
+    data: T
+}
+type stringPayload = payload<string>
+type numberPayload = payload<number>
+
+// Better use unknown than any
+function inspect<T extends payload<unknown>>(element: T): void {
+    console.log(element.data)
+}
+
+const stringPayloadInstance: stringPayload = {
+    data: 'Foo'
+}
+const numberPayloadInstance: numberPayload = {
+    data: 10
+}
+
+inspect(stringPayloadInstance)
+inspect(numberPayloadInstance)
+```
+
+it is also possible to use intersections in a function's signature like this:
+
+```typescript
+type item = {
+    id: number
+}
+type amount = {
+    amount: number
+}
+function inspectWithIntersection<T extends item & amount>(element: T): void {
+    console.log(`ID: ${element.id} and AMOUNT: ${element.amount}`)
+}
+let product: item & amount = {
+    id: 15,
+    amount: 10
+}
+
+// If product were not of type item and amount the call to this method would not be possible 
+inspectWithIntersection(product)
 ```
