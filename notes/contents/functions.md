@@ -366,3 +366,19 @@ let product: item & amount = {
 // If product were not of type item and amount the call to this method would not be possible 
 inspectWithIntersection(product)
 ```
+
+#### Generic Type Defaults
+
+It is possible to assign a default value to a generic type in the followinf way:
+
+```typescript
+type MyEvent<T = PayloadVO> = {
+    description: string,
+    payload: T
+}
+
+// Warning having assigned a default value to the payload, it is not necessary to use the diamond annotation anymore
+type EventWithPayload = MyEvent<PayloadVO>
+```
+
+in this case the type of `T` defaults to `PayloadVO` and the following type definitions does not require the type to have a class in the diamond annotation.
