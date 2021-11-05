@@ -213,3 +213,167 @@ doSomething(doe)
 
 calling the `doSomething` would result in an error with the following message `Argument of type 'Doe' is not assignable to parameter of type 'Foo'.
   Property 'dummy' is private in type 'Doe' but not in type 'Foo'.`
+
+## Classes declare both Values and Types (Review)
+
+As far as I have understood, when one defines a class this way:
+
+```typescript
+type State = {
+    [key: string]: string
+}
+
+class DatabaseString {
+    state: State = {}
+
+    getState(key: string): string | null {
+        return key in this.state ? this.state[key] : null
+    }
+
+    setState(key: string, value: string) {
+        this.state[key] = value
+    }
+
+    static from(state: State): DatabaseString {
+        const db = new DatabaseString()
+        for (const key in state) {
+            db.setState(key, state[key])
+        }
+        return db
+    }
+}
+```
+
+the `tsc` generates two definitions. One is the type:
+
+```typescript
+interface DatabaseString {
+    state: State
+    getState(key: string): string | null
+    setState(key: string, value: string): void
+    
+}
+```
+
+and one is the value:
+
+```typescript
+interface DatabaseStringConstructor {
+    new(): DatabaseString
+    from(state: State): DatabaseString
+}
+```
+
+## Generics in Classes and Interfaces
+
+The usage of generics not only works for functions and types, but it also works for classes and interfaces. Their usage is not that different from the usage of generics in java. For example: 
+
+```typescript
+class MapWrapper<K, V> {
+    constructor(private key: K, private value: V) {
+    }
+
+    getKey(): K {
+        return this.key
+    }
+
+    setKey(k: K): void {
+        this.key = k
+    }
+
+    // This is a public instance method and it has access to K and V, but it adds two additional generics K1 and V1
+    merge<K1, V1>(map: MapWrapper<K | K1, V | V1>): MapWrapper<K | K1, V | V1> {
+        // do something with the input param
+        return map
+    }
+
+    // As this method is static it has no access to the K and V types as they are instance level types
+    static of<X, Y>(key: X, value: Y): MapWrapper<X, Y> {
+        return new MapWrapper(key, value)
+    }
+}
+
+const mapWrapper = new MapWrapper<string, number>("Hello", 5);
+// This is a bit stupid but it works
+mapWrapper.merge<number, boolean>(mapWrapper)
+```
+
+## Mixins
+
+A Mixin is a pattern that allows us to mix behaviour and properties into a class. It works similar to a decorator, that is, a 'something' that wraps around a class and adds a functionality to another class without altering the original class.
+
+`A Mixin is a function that takes a constructor and returns a class constructor`. An example of how we can use a mixin is described here:
+
+```typescript
+// This is the generic signature for a constructor that returns an object of type T and an arbitrary number of parameters
+type ClassConstructor<T> = new(...args: any[]) => T
+
+// This is basically defining a mixin that adds a debug feature to whatever object K and it uses a generic object with a 'getDebugValue' method
+function withEZDebug<K extends ClassConstructor<{
+    getDebugValue(): string
+}>>(Class: K) {
+    return class extends Class {
+        debug() {
+            return `My Mixin ${this.getDebugValue()}`
+        }
+    }
+}
+
+// This will be the class subject to the mixin
+class Person {
+    constructor(private name: string, private surname: string) {
+    }
+
+    getName() {
+        return 'getName called'
+    }
+
+    getSurname() {
+        return 'getSurname called'
+    }
+
+    getDebugValue() {
+        // if the getDebugValue declared the following signature 'getDebugValue(): object' we might have returned { ... }
+        // return { fullname: this.name + this.surname }
+
+        return `${this.name} ${this.surname}`
+    }
+}
+
+// We are adding the debug feature to a Person.
+const DebuggerMixin = withEZDebug(Person)
+
+// From here on we can use the debuggerMixin as if it were a Person
+const debuggerMixin = new DebuggerMixin('Hi', 'There')
+console.log(debuggerMixin.getName(), debuggerMixin.getSurname(), debuggerMixin.debug())
+```
+
+This mixin is basically extending a class with debugging fetures, without the need to modify the class the is subject to the mixing. This seems to be a good idea to implement cross cutting concerns without the need to touch all the classes that need the additional feature.
+
+## Final Classes
+
+Final classes cannot be instantiated nor extended. In Typescript (as well as in Java) to mark a class final it is necessary to mark its constructor private. This way the class is at all means final. However, if we want to allow instantiation a factory method can be used:
+
+```typescript
+class AFinalClass {
+
+    private constructor(private _description: string) {
+    }
+
+    getDescription(): string {
+        return this._description;
+    }
+
+    // This method can be used when we want to be able to instantiate a class, but do not want to permit extendibility.
+    public static create(description: string): AFinalClass {
+        return new AFinalClass(description)
+    }
+}
+
+const aFinalClass = AFinalClass.create('dummy');
+console.log(aFinalClass.getDescription())
+
+// error TS2675: Cannot extend a class 'AFinalClass'. Class constructor is marked as private.
+class AFinalExtended extends AFinalClass {
+}
+```
