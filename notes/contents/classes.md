@@ -264,6 +264,8 @@ interface DatabaseStringConstructor {
 }
 ```
 
+In general `Typescript` has separate namespaces for values and for types.
+
 ## Generics in Classes and Interfaces
 
 The usage of generics not only works for functions and types, but it also works for classes and interfaces. Their usage is not that different from the usage of generics in java. For example: 
@@ -377,3 +379,5 @@ console.log(aFinalClass.getDescription())
 class AFinalExtended extends AFinalClass {
 }
 ```
+
+
