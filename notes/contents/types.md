@@ -1,4 +1,7 @@
 ## Type System
+
+![Graphical representation of the type system](./TypeScript-Types.png "Typescrypt type system")
+
 A good rule of thumb is to let the TSC infer the type of your variable and avoid an explicit type definition.
 
 ### Any
