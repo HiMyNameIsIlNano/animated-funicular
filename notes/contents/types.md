@@ -57,7 +57,7 @@ let h: { b: string, c?: number, d: boolean } = {b: 'value', d: true}
 console.log(h.b) // (2) it prints 'value'
 
 let j: { [b: number]: string } = {10: 'ten'} // Object with index signature
-let danger: Object = {} // The compiler complains about this one and IT MUST be AVOIDED
+let danger: Object = {} // The compiler complains about this because Object is a Javascript type. The TSlint suggests to use object instead
 ```
 
 Case (1) would raise an error as the type of `h0` is `object` and `object` has no property by the name `b`. In general one should avoid the following types of syntax:
