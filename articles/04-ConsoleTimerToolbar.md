@@ -49,11 +49,11 @@ if __name__ == "__main__":
     main(sys.argv[1:])
 ```
 
-The script requires `alive-progressbar` to be installed with `pip install alive-progress`. Moreover the script needs to be made executable.
+The script requires `progressbar` to be installed with `pip install progressbar`. Moreover the script needs to be made executable.
 
 ```shell
 chmod +x timer.py
 ./timer.py -s 60
 ```
 
-This starts a countdown bar for 60 seconds and plays a beep sound at the end (if the bell sound is enabled).
+This starts a countdown bar for 60 seconds and shows a pop-up window when the time is up.
