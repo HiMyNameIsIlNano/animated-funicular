@@ -4,20 +4,23 @@ I always wanted to have a way to timebox my activity, but I have never found a c
 ```python
 #!/usr/bin/python
 
-from alive_progress import alive_bar;
-
+import progressbar
+import ctypes
 import sys, getopt
 import time
 
 def show_timer(amount_in_sec):
-    with alive_bar(amount_in_sec) as bar:
-        for _ in range(amount_in_sec):
-            time.sleep(1)
-            bar()
+    widgets=[
+    ' [', progressbar.Timer(), '] ',
+        progressbar.Bar(),
+    ' (', progressbar.ETA(), ') ',
+    ]
+    for i in progressbar.progressbar(range(amount_in_sec), widgets=widgets):
+        time.sleep(1)
 
 # This only works if the bell is active in the terminal
-def play_sound():
-    print('\a')
+def show_popup():
+    ctypes.windll.user32.MessageBoxW(0, "The time is over!", "Countdown", 1)
 
 def main(argv):
     amount_in_sec=60
@@ -39,9 +42,10 @@ def main(argv):
             sys.exit(2)
     
     show_timer(amount_in_sec)
-    play_sound()
+    show_popup()
 
 if __name__ == "__main__":
+    main(sys.argv[1:])__ == "__main__":
     main(sys.argv[1:])
 ```
 
