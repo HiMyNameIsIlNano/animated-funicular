@@ -11,6 +11,7 @@ This is just a collection of thoughts, scripts and things that I feel like docum
 - [How to have a simple but effective todo list creator and editor](articles/02-TodoListCreator.md)  
 - [How to get the address of a REST Controller Resource in Wildfly](articles/03-FindRestControllerApiAddressInWildfly.md) 
 - [A simple console time written in python](articles/04-ConsoleTimerToolbar.md)
+- [A short collection of useful Intellij Templates](articles/05-IntellijUsefulLiveTemplates.md)
 
 ### Notes
 
