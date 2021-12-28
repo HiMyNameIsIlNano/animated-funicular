@@ -250,3 +250,7 @@ function cookItSafe(cookable: SaferCookable) {
 cookItSafe(SaferCookable.Pasta)
 cookItSafe(25) // It is not possible to call the function with a number as the enum maps string to string
 ```
+
+## Advanced Types
+
+
