@@ -69,4 +69,4 @@ chmod +x timer.py
 
 This starts a countdown of 60 seconds and shows a notification when the time is up. 
 
-The source code can be found [here](https://github.com/HiMyNameIsIlNano/himynameis-utils/blob/main/timer.py)
+The source code can be found [here](https://github.com/HiMyNameIsIlNano/himynameis-utils/blob/main/timer.py).
