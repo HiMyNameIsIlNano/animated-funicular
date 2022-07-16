@@ -12,6 +12,7 @@ This is just a collection of thoughts, scripts and things that I feel like docum
 - [How to get the address of a REST Controller Resource in Wildfly](articles/03-FindRestControllerApiAddressInWildfly.md) 
 - [A simple console timer written in python](articles/04-ConsoleTimerToolbar.md)
 - [A short collection of useful Intellij Templates](articles/05-IntellijUsefulLiveTemplate.md)
+- [Some useful tips for angular testing](articles/06-AngularTestingGoodies.md)
 
 ### Notes
 
