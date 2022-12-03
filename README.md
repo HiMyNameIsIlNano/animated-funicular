@@ -13,6 +13,7 @@ This is just a collection of thoughts, scripts and things that I feel like docum
 - [A simple console timer written in python](articles/04-ConsoleTimerToolbar.md)
 - [A short collection of useful Intellij Templates](articles/05-IntellijUsefulLiveTemplate.md)
 - [Some useful tips for angular testing](articles/06-AngularTestingGoodies.md)
+- [Testing angular observables](articles/07-AngularTestingObservables.md)
 
 ### Notes
 
