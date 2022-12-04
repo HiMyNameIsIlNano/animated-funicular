@@ -1,4 +1,4 @@
-# Tips and tricks for Angular Testing
+# Testing Observable Error Cases in Angular
 
 When I write Unit Test one of the things I stumble upon the most is observables. This has nothing to do with the fact that observables might be hard to grasp, rather it has to do with the way I think about problem and that is, the program flows sequentially. The only issue with this is, that Front End programming has more to do with asynchronous function than Back End development. 
 
@@ -62,4 +62,4 @@ it('test error case', () => {
 });
 ```
 
-here the trick is made by the `throwError(...)` function in the `mockReturnValue` that is basically activating the `catchError` function within the `getSomeData()` from the `BazService`
+here the trick is made by the `throwError(...)` function in the `mockReturnValue` that is basically activating the `catchError` function within the `getSomeData()` from the `BazService`. In this particular case the test is using the `jest` library to mock response, but the same result can be achieved using `jasmine`.
