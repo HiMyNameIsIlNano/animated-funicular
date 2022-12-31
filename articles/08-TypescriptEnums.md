@@ -49,3 +49,6 @@ function move(direction: Direction) {
 move('UP')
 ```
 
+# Resources:
+
+- [Enums considered harmful](https://www.youtube.com/watch?v=jjMbPt_H3RQ&ab_channel=MattPocock)
